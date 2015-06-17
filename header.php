@@ -25,23 +25,26 @@
 	</head>
 	<body <?php body_class(); ?>>
 
-<div class="container-fluid no_padding outer_header">
+<div class="no_padding outer_header">
 <div class="header_wrap">
 			<!-- header -->
-			<header class="header clear col-md-12" role="banner">
-
-					<!-- logo -->
-					<div class="logo">
-					<h1 class="site-title">
-						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-						<?php bloginfo( 'name' ); ?>
-						</a>
-					</h1>
-					</div>
-					<!-- /logo -->
+			<header class="header clear" role="banner">
 
 <!-- nav -->
-<nav class="nav" role="navigation">
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<?php echo home_url(); ?>">
+                <?php bloginfo('name'); ?>
+            </a>
+    </div>
 <?php
 wp_nav_menu( array(
  'menu'            => 'Primary',
@@ -51,11 +54,11 @@ wp_nav_menu( array(
 'container_class'   => 'collapse navbar-collapse',
 'container_id'      => 'bs-example-navbar-collapse-1',
 'menu_class'        => 'nav navbar-nav',
-'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
-'walker'            => new wp_bootstrap_navwalker())
+)
             );
 ?>
 <!-- /nav -->
+    </div>
 </nav>
 			</header>
 			<!-- /header -->
