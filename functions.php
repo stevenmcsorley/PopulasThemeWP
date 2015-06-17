@@ -15,6 +15,9 @@
 	Theme Support
 \*------------------------------------*/
 
+// Register Custom Navigation Walker
+require_once('wp_bootstrap_navwalker.php');
+
 if (!isset($content_width))
 {
     $content_width = 900;
@@ -62,41 +65,32 @@ if (function_exists('add_theme_support'))
 	Functions
 \*------------------------------------*/
 
+
+
 // POPULAS navigation
-function populas_nav()
-{
-	wp_nav_menu(
-	array(
-		'theme_location'  => 'header-menu',
-		'menu'            => '',
-		'container'       => 'div',
-		'container_class' => 'menu-{menu slug}-container',
-		'container_id'    => '',
-		'menu_class'      => 'menu',
-		'menu_id'         => '',
-		'echo'            => true,
-		'fallback_cb'     => 'wp_page_menu',
-		'before'          => '',
-		'after'           => '',
-		'link_before'     => '',
-		'link_after'      => '',
-		'items_wrap'      => '<ul>%3$s</ul>',
-		'depth'           => 0,
-		'walker'          => ''
-		)
-	);
-}
+register_nav_menus( array(
+    'header-menu' => __( 'Header Menu', 'populas' ),
+) );
 
 // Load POPULAS scripts (header.php)
 function populas_header_scripts()
 {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
 
-    	wp_register_script('conditionizr', get_template_directory_uri() . '/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
-        wp_enqueue_script('conditionizr'); // Enqueue it!
+    	//wp_register_script('conditionizr', get_template_directory_uri() . '/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
+        //wp_enqueue_script('conditionizr'); // Enqueue it!
 
-        wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
-        wp_enqueue_script('modernizr'); // Enqueue it!
+        //wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
+        //wp_enqueue_script('modernizr'); // Enqueue it!
+        
+         wp_register_script('jquery', get_template_directory_uri() . '/js/jquery.min.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('jquery'); // Enqueue it!
+
+         wp_register_script('boostrapJs', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('boostrapJs'); // Enqueue it!
+     
+        wp_register_script('scrollview', get_template_directory_uri() . '/js/scrollview.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('scrollview'); // Enqueue it!
 
         wp_register_script('populasscripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('populasscripts'); // Enqueue it!
@@ -115,7 +109,7 @@ function populas_conditional_scripts()
 // Load POPULAS styles
 function populas_styles()
 {
-    wp_register_style('boostrap', get_template_directory_uri() . '/css/boostrap.css', array(), '1.0', 'all');
+    wp_register_style('boostrap', get_template_directory_uri() . '/css/bootstrap.css', array(), '1.0', 'all');
     wp_enqueue_style('boostrap'); // Enqueue it!
 
     wp_register_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css', array(), '1.0', 'all');
@@ -126,27 +120,27 @@ function populas_styles()
 }
 
 // Register populas Navigation
-function register_html5_menu()
-{
-    register_nav_menus(array( // Using array to specify more menus if needed
-        'header-menu' => __('Header Menu', 'populas'), // Main Navigation
-        'sidebar-menu' => __('Sidebar Menu', 'populas'), // Sidebar Navigation
-        'extra-menu' => __('Extra Menu', 'populas') // Extra Navigation if needed (duplicate as many as you need!)
-    ));
-}
+//function register_html5_menu()
+//{
+//    register_nav_menus(array( // Using array to specify more menus if needed
+//        'header-menu' => __('Header Menu', 'populas'), // Main Navigation
+//        'sidebar-menu' => __('Sidebar Menu', 'populas'), // Sidebar Navigation
+//        'extra-menu' => __('Extra Menu', 'populas') // Extra Navigation if needed (duplicate as many as you need!)
+//    ));
+//}
 
 // Remove the <div> surrounding the dynamic navigation to cleanup markup
-function my_wp_nav_menu_args($args = '')
-{
-    $args['container'] = false;
-    return $args;
-}
+//function my_wp_nav_menu_args($args = '')
+//{
+//    $args['container'] = false;
+//    return $args;
+//}
 
 // Remove Injected classes, ID's and Page ID's from Navigation <li> items
-function my_css_attributes_filter($var)
-{
-    return is_array($var) ? array() : '';
-}
+//function my_css_attributes_filter($var)
+//{
+ //   return is_array($var) ? array() : '';
+//}
 
 // Remove invalid rel attribute values in the categorylist
 function remove_category_rel_from_category_list($thelist)
@@ -350,7 +344,7 @@ add_action('init', 'populas_header_scripts'); // Add Custom Scripts to wp_head
 add_action('wp_print_scripts', 'populas_conditional_scripts'); // Add Conditional Page Scripts
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'populas_styles'); // Add Theme Stylesheet
-add_action('init', 'register_html5_menu'); // Add populas Menu
+//add_action('init', 'register_html5_menu'); // Add populas Menu
 add_action('init', 'create_post_type_html5'); // Add our populas Custom Post Type
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
@@ -374,7 +368,7 @@ add_filter('avatar_defaults', 'populasgravatar'); // Custom Gravatar in Settings
 add_filter('body_class', 'add_slug_to_body_class'); // Add slug to body class (Starkers build)
 add_filter('widget_text', 'do_shortcode'); // Allow shortcodes in Dynamic Sidebar
 add_filter('widget_text', 'shortcode_unautop'); // Remove <p> tags in Dynamic Sidebars (better!)
-add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <div> from WP Navigation
+//add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <div> from WP Navigation
 // add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> injected classes (Commented out by default)
 // add_filter('nav_menu_item_id', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> injected ID (Commented out by default)
 // add_filter('page_css_class', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> Page ID's (Commented out by default)

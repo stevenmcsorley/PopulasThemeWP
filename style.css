@@ -79,15 +79,49 @@ input:focus {
     STRUCTURE
 \*------------------------------------*/
 
+/* BOOTSTRAP HELPERS */
+
+.no_padding
+{
+	padding-left:0;
+	padding-right:0;
+}
+
+.no_padding_left
+{
+padding-left:0;
+}
+
+.no_padding_right
+{
+padding-right:0;	
+}
+
 /* wrapper */
 .wrapper {
-	max-width:1280px;
-	width:95%;
+	max-width:980px;
 	margin:0 auto;
 	position:relative;
 }
 /* header */
+
+.outer_header
+{
+	margin-top:40px;
+	background: #fff;
+min-height: 100px
+}
+.header_wrap
+{
+	max-width:980px;
+	
+	margin:0 auto;
+background: #fff;
+min-height: 100px
+}
 .header {
+	max-width: 980px;
+	margin: 0 auto;
 
 }
 /* logo */

@@ -25,23 +25,41 @@
 	</head>
 	<body <?php body_class(); ?>>
 
-		<!-- wrapper -->
-		<div class="wrapper">
-
+<div class="container-fluid no_padding outer_header">
+<div class="header_wrap">
 			<!-- header -->
-			<header class="header clear" role="banner">
+			<header class="header clear col-md-12" role="banner">
 
 					<!-- logo -->
 					<div class="logo">
-<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+					<h1 class="site-title">
+						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+						<?php bloginfo( 'name' ); ?>
+						</a>
+					</h1>
 					</div>
 					<!-- /logo -->
 
-					<!-- nav -->
-					<nav class="nav" role="navigation">
-						<?php populas_nav(); ?>
-					</nav>
-					<!-- /nav -->
-
+<!-- nav -->
+<nav class="nav" role="navigation">
+<?php
+wp_nav_menu( array(
+ 'menu'            => 'Primary',
+'theme_location'  => 'header-menu',
+'depth'             => 2,
+'container'         => 'div',
+'container_class'   => 'collapse navbar-collapse',
+'container_id'      => 'bs-example-navbar-collapse-1',
+'menu_class'        => 'nav navbar-nav',
+'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
+'walker'            => new wp_bootstrap_navwalker())
+            );
+?>
+<!-- /nav -->
+</nav>
 			</header>
 			<!-- /header -->
+</div>
+</div>
+		<!-- wrapper -->
+		<div class="wrapper">
