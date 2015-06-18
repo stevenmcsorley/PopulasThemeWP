@@ -16,16 +16,7 @@
 \*------------------------------------*/
 
 /* global box-sizing */
-*,
-*:after,
-*:before {
-	-moz-box-sizing:border-box;
-	box-sizing:border-box;
-	-webkit-font-smoothing:antialiased;
-	font-smoothing:antialiased;
-	text-rendering:optimizeLegibility;
-	
-}
+
 /* html element 62.5% font-size for REM use */
 html {
 	
@@ -36,6 +27,8 @@ body
 {
   font-family: 'liberation_sansregular',helvetica, arial;
   background:#f1f1f1;
+  background-image: url('images/zerosandones.png');
+
 }
 
 
@@ -84,8 +77,8 @@ input:focus {
 
 .no_padding
 {
-	padding-left:0;
-	padding-right:0;
+	padding-left:0!important;
+	padding-right:0!important;
 }
 
 .no_padding_left
@@ -108,10 +101,47 @@ padding-right:0;
 
 .outer_header
 {
+	position:relative;
 	margin-top:40px;
 	background: #fff;
 min-height: 150px
 }
+
+
+.outer_header:before, .outer_header:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+.outer_header:after
+{
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+
+
+
+
 .header_wrap
 {
 	max-width:980px;
@@ -211,7 +241,7 @@ color:#bdbdbd;
   background:transparent!important;
 }
 .nav li.current-menu-item:after {
-  top: -101%;
+  top: -69%;
   left: 50%;
   border: solid transparent;
   content: " ";
@@ -238,6 +268,85 @@ color:#bdbdbd;
 
   }
 
+/* CAROUSEL */
+
+#carousel 
+{
+	margin-top:40px;
+width:100%;
+}
+
+
+#carousel .carousel-inner .item 
+{
+
+}
+
+
+#carousel .carousel-inner .item img
+{
+width:100%;
+height: auto;
+}
+
+/*
+  Bootstrap Carousel Fade Transition (for Bootstrap 3.3.x)
+  CSS from:       http://codepen.io/transportedman/pen/NPWRGq
+  and:            http://stackoverflow.com/questions/18548731/bootstrap-3-carousel-fading-to-new-slide-instead-of-sliding-to-new-slide
+  Inspired from:  http://codepen.io/Rowno/pen/Afykb 
+*/
+.carousel-inner > .item {
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  position: absolute;
+  z-index: 0;
+  -webkit-transition: none;
+       -o-transition: none;
+          transition: none;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+          transform: translate3d(0, 0, 0) !important;
+}
+.carousel-inner > .item:first-of-type {
+  position: relative;
+}
+.carousel-inner > .active {
+  opacity: 1;
+  z-index: 3;
+}
+.carousel-inner > .next.left,
+.carousel-inner > .prev.right {
+  -webkit-transition: opacity 0.6s ease-in-out;
+       -o-transition: opacity 0.6s ease-in-out;
+          transition: opacity 0.6s ease-in-out;
+  opacity: 1;
+  left: 0;
+  z-index: 2;
+}
+.carousel-inner > .active.left,
+.carousel-inner > .active.right {
+  z-index: 1;
+}
+.carousel-control {
+  z-index: 4;
+}
+
+
+
+
+html, 
+body, 
+.carousel, 
+.carousel-inner, 
+.carousel-inner .item {
+  height: 100%;
+}
+
+
+
+
 
 /* sidebar */
 .sidebar {
@@ -251,7 +360,46 @@ color:#bdbdbd;
 /*------------------------------------*\
     PAGES
 \*------------------------------------*/
+.randomposts
+{
+	padding:40px 0px;
+	max-width: 980px;
+	margin:0 auto;
+}
 
+.randomposts a h4
+{
+font-family: 'bebasregular';
+font-size:14px;
+padding:10px 0px;
+word-spacing: 4px;	
+line-height:16px;
+}
+
+.random_img
+{
+	width:100%;
+	height: auto;
+}
+
+.randomposts p
+{
+	margin:10px 0px;
+}
+
+.more
+{
+	margin-top:10px;
+   font-family: 'bebasregular';
+   font-size:12px;
+   word-spacing: 4px;
+}
+
+
+.banner { overflow: auto; width:100%!important; height:auto;padding:0; margin:0;}
+.banner ul { float: left;padding-left:0!important; }
+    .banner li { list-style: none; }
+        .banner ul li { float: left; }
 
 
 /*------------------------------------*\

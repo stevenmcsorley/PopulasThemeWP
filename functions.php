@@ -18,6 +18,8 @@
 // Register Custom Navigation Walker
 require_once('wp_bootstrap_navwalker.php');
 
+
+
 if (!isset($content_width))
 {
     $content_width = 900;
@@ -94,6 +96,9 @@ function populas_header_scripts()
 
         wp_register_script('populasscripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('populasscripts'); // Enqueue it!
+
+        wp_register_script('unslider', get_template_directory_uri() . '/js/unslider.min.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('unslider'); // Enqueue it!
     }
 }
 
@@ -112,11 +117,14 @@ function populas_styles()
     wp_register_style('boostrap', get_template_directory_uri() . '/css/bootstrap.css', array(), '1.0', 'all');
     wp_enqueue_style('boostrap'); // Enqueue it!
 
-    wp_register_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css', array(), '1.0', 'all');
+    wp_register_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css', array(), '3.2.1', 'all');
     wp_enqueue_style('font-awesome'); // Enqueue it!
 
     wp_register_style('populas', get_template_directory_uri() . '/style.css', array(), '1.0', 'all');
     wp_enqueue_style('populas'); // Enqueue it!
+
+    wp_register_style('less-style', get_stylesheet_directory_uri() . '/style.less', array(), '1.0', 'all');
+    wp_enqueue_style('less-style'); // Enqueue it!
 }
 
 // Register populas Navigation
@@ -216,33 +224,33 @@ function html5wp_pagination()
 }
 
 // Custom Excerpts
-function html5wp_index($length) // Create 20 Word Callback for Index page Excerpts, call using html5wp_excerpt('html5wp_index');
-{
-    return 20;
-}
+//function html5wp_index($length) // Create 20 Word Callback for Index page Excerpts, call using html5wp_excerpt('html5wp_index');
+//{
+ //   return 20;
+//}
 
 // Create 40 Word Callback for Custom Post Excerpts, call using html5wp_excerpt('html5wp_custom_post');
-function html5wp_custom_post($length)
-{
-    return 40;
-}
+//function html5wp_custom_post($length)
+//{
+ //   return 40;
+//}
 
 // Create the Custom Excerpts callback
-function html5wp_excerpt($length_callback = '', $more_callback = '')
-{
-    global $post;
-    if (function_exists($length_callback)) {
-        add_filter('excerpt_length', $length_callback);
-    }
-    if (function_exists($more_callback)) {
-        add_filter('excerpt_more', $more_callback);
-    }
-    $output = get_the_excerpt();
-    $output = apply_filters('wptexturize', $output);
-    $output = apply_filters('convert_chars', $output);
-    $output = '<p>' . $output . '</p>';
-    echo $output;
-}
+//function html5wp_excerpt($length_callback = '', $more_callback = '')
+//{
+ //   global $post;
+ //   if (function_exists($length_callback)) {
+ //       add_filter('excerpt_length', $length_callback);
+  //  }
+  //  if (function_exists($more_callback)) {
+  //      add_filter('excerpt_more', $more_callback);
+   // }
+   // $output = get_the_excerpt();
+   // $output = apply_filters('wptexturize', $output);
+   // $output = apply_filters('convert_chars', $output);
+   // $output = '<p>' . $output . '</p>';
+   // echo $output;
+//}
 
 // Custom View Article link to Post
 function html5_blank_view_article($more)
@@ -375,7 +383,7 @@ add_filter('widget_text', 'shortcode_unautop'); // Remove <p> tags in Dynamic Si
 add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove invalid rel attribute
 add_filter('the_excerpt', 'shortcode_unautop'); // Remove auto <p> tags in Excerpt (Manual Excerpts only)
 add_filter('the_excerpt', 'do_shortcode'); // Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
-add_filter('excerpt_more', 'html5_blank_view_article'); // Add 'View Article' button instead of [...] for Excerpts
+//add_filter('excerpt_more', 'html5_blank_view_article'); // Add 'View Article' button instead of [...] for Excerpts
 //add_filter('show_admin_bar', 'remove_admin_bar'); // Remove Admin bar
 //add_filter('style_loader_tag', 'html5_style_remove'); // Remove 'text/css' from enqueued stylesheet
 add_filter('post_thumbnail_html', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to thumbnails
@@ -449,4 +457,11 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
     return '<h2>' . $content . '</h2>';
 }
 
+/* CUSTOMS */
+
+add_filter('walker_nav_menu_start_el', 'description_in_nav_el', 10, 4);
+function description_in_nav_el($item_output, $item, $depth, $args)
+{
+    return preg_replace('/(<a.*?>[^<]*?)</', '$1' . "<span>{$item->attr_title}</span><", $item_output);
+}
 ?>

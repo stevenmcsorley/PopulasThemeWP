@@ -64,5 +64,9 @@ wp_nav_menu( array(
 			<!-- /header -->
 </div>
 </div>
-		<!-- wrapper -->
-		<div class="wrapper">
+<?php if(is_front_page() ) { ?>
+
+<?php } else { ?>
+<!-- wrapper -->
+		<div class="wrapper">	
+<?php } ?>
