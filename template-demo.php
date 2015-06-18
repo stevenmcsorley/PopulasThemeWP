@@ -37,14 +37,13 @@ Template Name: Homepage
 </div> <!-- Carousel -->
 </div>
 
-<?php if(is_front_page() ) { ?>
 
-<div class="wrapper">
-
-<?php } else { ?>
-<!-- wrapper -->
-			
-<?php } ?>
+<div class="container-fluid random_wrap no_padding">
+    <div class="outer_randomposts_header">
+    <div class="randomposts_header">
+<h3>Random Bog Posts</h3>
+    </div>
+</div>
 <div class="randomposts">
 
 
@@ -93,14 +92,25 @@ function the_random_posts() {
 <div class="banner">
 	 <ul>
 <?php
+
+
+
+
     foreach ( $random_posts_one as $post ) {
         // Change this line to code you want to output.
        		print "<li>";
         	$featimage = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
         	print "<img src='".$featimage[0]."' class='random_img' alt='' />";
-        	print "<a href='".get_permalink( $post->ID )."' ><h4>".get_the_title( $post->ID )."</h4></a>";
-        	print "<p>".wp_trim_words( $post->post_content, 20, '<br /><a href="'. get_permalink( $post->ID ).'" class="more">&#187; Read More</a>' )."</p>";
-        	print "</li>";	 
+        	print "<a href='".get_permalink( $post->ID )."' ><h4>".wp_trim_words( get_the_title( $post->ID ), 5, '...')."</h4></a>";
+        	print "<div class='cat_list'>";
+            $category_detail=get_the_category($post->ID);
+            foreach($category_detail as $cd){
+            $category_id = get_cat_ID( $cd->cat_name);
+            echo "<p>From: <a href='".get_category_link( $category_id)."'>".$cd->cat_name."</a><p>";
+            }
+            print "</div>";
+            print "<p class='excerpt'>".wp_trim_words( $post->post_content, 20, '<br /><a href="'. get_permalink( $post->ID ).'" class="more">&#187; Read More</a>' )."</p>";
+            print "</li>";
     }
 ?>
 </ul>
@@ -114,12 +124,19 @@ function the_random_posts() {
 	<?php
         foreach ( $random_posts_two as $post ) {
         // Change this line to code you want to output.
-       		print "<li>";
-        	$featimage = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
-        	print "<img src='".$featimage[0]."' class='random_img' alt='' />";
-        	print "<a href='".get_permalink( $post->ID )."' ><h4>".get_the_title( $post->ID )."</h4></a>";
-        	print "<p>".wp_trim_words( $post->post_content, 20, '<br /><a href="'. get_permalink( $post->ID ).'" class="more">&#187; Read More</a>' )."</p>";
-        	print "</li>";	 
+            print "<li>";
+            $featimage = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
+            print "<img src='".$featimage[0]."' class='random_img' alt='' />";
+            print "<a href='".get_permalink( $post->ID )."' ><h4>".wp_trim_words( get_the_title( $post->ID ), 5, '...')."</h4></a>";
+            print "<div class='cat_list'>";
+            $category_detail=get_the_category($post->ID);
+            foreach($category_detail as $cd){
+            $category_id = get_cat_ID( $cd->cat_name);
+            echo "<p>From: <a href='".get_category_link( $category_id)."'>".$cd->cat_name."</a><p>";
+            }
+            print "</div>";
+            print "<p class='excerpt'>".wp_trim_words( $post->post_content, 20, '<br /><a href="'. get_permalink( $post->ID ).'" class="more">&#187; Read More</a>' )."</p>";
+            print "</li>";
     }
 ?>
 </ul>
@@ -133,12 +150,19 @@ function the_random_posts() {
 
         foreach ( $random_posts_three as $post ) {
         // Change this line to code you want to output.
-       		print "<li>";
-        	$featimage = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
-        	print "<img src='".$featimage[0]."' class='random_img' alt='' />";
-        	print "<a href='".get_permalink( $post->ID )."' ><h4>".get_the_title( $post->ID )."</h4></a>";
-        	print "<p>".wp_trim_words( $post->post_content, 20, '<br /><a href="'. get_permalink( $post->ID ).'" class="more">&#187; Read More</a>' )."</p>";
-        	print "</li>";
+            print "<li>";
+            $featimage = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
+            print "<img src='".$featimage[0]."' class='random_img' alt='' />";
+            print "<a href='".get_permalink( $post->ID )."' ><h4>".wp_trim_words( get_the_title( $post->ID ), 5, '...')."</h4></a>";
+            print "<div class='cat_list'>";
+            $category_detail=get_the_category($post->ID);
+            foreach($category_detail as $cd){
+            $category_id = get_cat_ID( $cd->cat_name);
+            echo "<p>From: <a href='".get_category_link( $category_id)."'>".$cd->cat_name."</a><p>";
+            }
+            print "</div>";
+            print "<p class='excerpt'>".wp_trim_words( $post->post_content, 20, '<br /><a href="'. get_permalink( $post->ID ).'" class="more">&#187; Read More</a>' )."</p>";
+            print "</li>";
     }
 ?>
 </ul>
@@ -171,7 +195,16 @@ function get_random_posts( $category_id, $post_count ) {
 
 </div>
 
+</div><!--end of fluid random -->
 
+<?php if(is_front_page() ) { ?>
+
+<div class="wrapper">
+
+<?php } else { ?>
+<!-- wrapper -->
+            
+<?php } ?>
 
 
 
